@@ -1,7 +1,11 @@
 # RDS database subnet group
 resource "aws_db_subnet_group" "app_db" {
-  name       = "${var.project_name}-db-subnet-group"
-  subnet_ids = var.private_subnet_ids
+  name = "${var.project_name}-db-subnet-group"
+
+  subnet_ids = [
+    aws_subnet.db_1.id,
+    aws_subnet.db_2.id
+  ]
 
   tags = {
     Name = "${var.project_name}-db-subnet-group"
@@ -26,12 +30,12 @@ resource "aws_db_instance" "app_db" {
   port     = 5432
 
   db_subnet_group_name   = aws_db_subnet_group.app_db.name
-  vpc_security_group_ids = [aws_security_group.database.id]
+  vpc_security_group_ids = [aws_security_group.db.id]
 
-  publicly_accessible    = false
-  multi_az               = false
-  skip_final_snapshot    = true
-  deletion_protection    = false
+  publicly_accessible  = false
+  multi_az             = false
+  skip_final_snapshot  = true
+  deletion_protection  = false
 
   backup_retention_period = 7
 

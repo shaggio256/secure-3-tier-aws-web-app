@@ -32,11 +32,10 @@ resource "aws_db_instance" "app_db" {
   db_subnet_group_name   = aws_db_subnet_group.app_db.name
   vpc_security_group_ids = [aws_security_group.db.id]
 
-  publicly_accessible  = false
-  multi_az             = false
-  skip_final_snapshot  = true
-  deletion_protection  = false
-
+  publicly_accessible     = false
+  multi_az                = false
+  skip_final_snapshot     = true
+  deletion_protection     = false
   backup_retention_period = 7
 
   tags = {
